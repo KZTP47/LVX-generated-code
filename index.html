@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ST1 - Energy for Life</title>
+    <style>
+        /* ST1 Brand Colors */
+        :root {
+            --st1-yellow: #FFD700; /* Gold */
+            --st1-red: #DC3545; /* Crimson Red */
+            --st1-black: #212529; /* Dark Grey/Black for text/backgrounds */
+            --st1-white: #F8F9FA; /* Off-white for backgrounds */
+            --st1-text-dark: #343A40; /* Dark Grey for general text */
+            --st1-text-light: #FFFFFF; /* White for text on dark backgrounds */
+        }
+
+        /* Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--st1-text-dark);
+            background-color: var(--st1-white);
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 0 20px;
+            overflow: hidden;
+        }
+
+        /* Header */
+        header {
+            background: var(--st1-black);
+            color: var(--st1-white);
+            padding: 1rem 0;
+            border-bottom: 3px solid var(--st1-yellow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--st1-yellow);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        header nav ul {
+            list-style: none;
+        }
+
+        header nav ul li {
+            display: inline;
+            margin-left: 20px;
+        }
+
+        header nav ul li a {
+            color: var(--st1-white);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        header nav ul li a:hover {
+            color: var(--st1-yellow);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            background: var(--st1-red);
+            color: var(--st1-white);
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s ease, transform 0.2s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background: #c82333; /* A slightly darker red */
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            /* Placeholder image for a fuel station/energy theme. Replace with actual ST1 branding images. */
+            background: url('https://images.unsplash.com/photo-1594412211181-e2f4f2f4f2f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80') no-repeat center center/cover;
+            color: var(--st1-white);
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Dark overlay for text readability */
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--st1-yellow);
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+        }
+
+        /* General Section Styling */
+        section {
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        section:nth-of-type(even) {
+            background-color: #f4f4f4; /* Light grey for alternating sections */
+        }
+
+        section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--st1-black);
+            position: relative;
+            display: inline-block;
+        }
+
+        section h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--st1-red);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* About Section */
+        .about-section p {
+            max-width: 800px;
+            margin: 0 auto 3rem auto;
+            font-size: 1.1rem;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 2rem;
+        }
+
+        .about-item {
+            background: var(--st1-white);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .about-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .about-item img {
+            width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            /* Placeholder images. Replace with actual ST1 related images. */
+        }
+
+        .about-item h3 {
+            color: var(--st1-red);
+            margin-bottom: 10px;
+        }
+
+        /* Services Section */
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 2rem;
+        }
+
+        .service-item {
+            background: var(--st1-black);
+            color: var(--st1-white);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            border-bottom: 5px solid var(--st1-yellow);
+            transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .service-item:hover {
+            background: #343a40; /* Slightly lighter black */
+            border-color: var(--st1-red);
+            transform: translateY(-5px);
+        }
+
+        .service-item h3 {
+            color: var(--st1-yellow);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .service-item p {
+            font-size: 1rem;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: var(--st1-red);
+            color: var(--st1-white);
+        }
+
+        .contact-section h2 {
+            color: var(--st1-white);
+        }
+
+        .contact-section h2::after {
+            background: var(--st1-yellow);
+        }
+
+        .contact-section p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-section form {
+            max-width: 600px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .contact-section form input,
+        .contact-section form textarea {
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--st1-black);
+        }
+
+        .contact-section form input::placeholder,
+        .contact-section form textarea::placeholder {
+            color: #6c757d;
+        }
+
+        .contact-section form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .contact-section form .btn {
+            background: var(--st1-black);
+            color: var(--st1-white);
+            border: 2px solid var(--st1-yellow);
+            padding: 12px 25px;
+            font-size: 1.1rem;
+        }
+
+        .contact-section form .btn:hover {
+            background: var(--st1-yellow);
+            color: var(--st1-black);
+            border-color: var(--st1-black);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--st1-black);
+            color: var(--st1-white);
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 3px solid var(--st1-red);
+        }
+
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        .social-links a {
+            color: var(--st1-white);
+            text-decoration: none;
+            margin-left: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--st1-yellow);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            header .container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            header nav ul {
+                margin-top: 15px;
+            }
+
+            header nav ul li {
+                margin: 0 10px;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .about-grid, .service-grid {
+                grid-template-columns: 1fr;
+            }
+
+            footer .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .social-links {
+                margin-top: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header .logo {
+                font-size: 2rem;
+            }
+
+            header nav ul li {
+                display: block;
+                margin: 10px 0;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            section h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">ST1</div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="hero-section">
+            <div class="hero-content">
+                <h1>Energy for Life</h1>
+                <p>Driving sustainable energy solutions for a brighter future.</p>
+                <a href="#services" class="btn">Explore Our Solutions</a>
+            </div>
+        </section>
+
+        <section id="about" class="about-section">
+            <div class="container">
+                <h2>About ST1</h2>
+                <p>ST1 is a leading energy company with a vision to be the leading producer and seller of CO2-aware energy. We focus on developing and implementing sustainable energy solutions, from advanced biofuels to efficient retail networks.</p>
+                <div class="about-grid">
+                    <div class="about-item">
+                        <img src="https://images.unsplash.com/photo-1517021897933-0e0319dc232d?ixlib=rb-4.
