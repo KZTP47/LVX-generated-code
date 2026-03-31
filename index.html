@@ -33,6 +33,11 @@
             scroll-behavior: smooth;
         }
 
+        /* Prevent scrolling when mobile menu is open */
+        body.no-scroll {
+            overflow: hidden;
+        }
+
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Montserrat', sans-serif;
             color: var(--st1-black);
@@ -100,11 +105,13 @@
             transition: width 0.3s ease;
         }
 
-        header nav ul li a:hover {
+        header nav ul li a:hover,
+        header nav ul li a.active { /* Added active state */
             color: var(--st1-yellow);
             transform: translateY(-2px);
         }
-        header nav ul li a:hover::after {
+        header nav ul li a:hover::after,
+        header nav ul li a.active::after { /* Added active state */
             width: 100%;
         }
 
@@ -294,6 +301,11 @@
             border-radius: 8px;
             margin-bottom: 20px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease; /* Added transition for image */
+        }
+
+        .about-item:hover img { /* Added hover effect for image */
+            transform: scale(1.03);
         }
 
         .about-item h3 {
@@ -462,8 +474,8 @@
         }
 
         .social-links a:hover {
-            color: var(--st1-yellow);
-            transform: translateY(-3px);
+            color: var(--st1-red); /* Changed hover color */
+            transform: translateY(-3px) scale(1.1); /* Added scale */
         }
 
         /* Back to Top Button */
@@ -718,40 +730,6 @@
         // Mobile menu toggle
         const mobileMenu = document.getElementById('mobile-menu');
         const mainNav = document.getElementById('main-nav');
-        const navLinks = mainNav.querySelectorAll('a');
+        const navLinks = mainNav.querySelectorAll('a'); // All nav links, used for closing mobile menu
 
-        mobileMenu.addEventListener('click', () => {
-            mobileMenu.classList.toggle('open');
-            mainNav.classList.toggle('open');
-            document.body.classList.toggle('no-scroll'); // Optional: prevent scrolling when menu is open
-        });
-
-        // Close mobile menu when a link is clicked
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.remove('open');
-                mainNav.classList.remove('open');
-                document.body.classList.remove('no-scroll');
-            });
-        });
-
-        // Back to top button functionality
-        const backToTopButton = document.getElementById('back-to-top');
-
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) { // Show button after scrolling 300px
-                backToTopButton.classList.add('show');
-            } else {
-                backToTopButton.classList.remove('show');
-            }
-        });
-
-        backToTopButton.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-    </script>
-</body>
-</html>
+        mobileMenu.addEventListener('click
