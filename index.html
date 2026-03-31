@@ -727,9 +727,48 @@
     </button>
 
     <script>
-        // Mobile menu toggle
         const mobileMenu = document.getElementById('mobile-menu');
         const mainNav = document.getElementById('main-nav');
-        const navLinks = mainNav.querySelectorAll('a'); // All nav links, used for closing mobile menu
+        const navLinks = mainNav.querySelectorAll('a');
+        const body = document.body;
+        const backToTopButton = document.getElementById('back-to-top');
+        const header = document.querySelector('header'); // Get header for offset calculation
+        const sections = document.querySelectorAll('section[id]');
 
-        mobileMenu.addEventListener('click
+        // Mobile menu toggle
+        mobileMenu.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+            mainNav.classList.toggle('open');
+            body.classList.toggle('no-scroll'); // Prevent scrolling when menu is open
+        });
+
+        // Function to highlight active navigation link
+        const highlightNavOnScroll = () => {
+            let current = '';
+            const scrollY = window.pageYOffset;
+            const headerHeight = header.offsetHeight; // Get header height dynamically
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - headerHeight - 20; // Adjust for header height and a small offset
+                const sectionHeight = section.clientHeight;
+
+                if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        };
+
+        // Event listeners for scroll and load to highlight active link
+        window.addEventListener('scroll', highlightNavOnScroll);
+        window.addEventListener('load', highlightNavOnScroll); // Call on load for initial state
+
+        // Close mobile menu when a navigation link is clicked and smooth scroll
+        navLinks.forEach(link => {
+            link.addEventListener('click', function (e)
