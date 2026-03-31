@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ST1 - Energy for Life</title>
+    <link rel="icon" href="https://www.st1.eu/themes/custom/st1_theme/favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* ST1 Brand Colors */
         :root {
@@ -23,11 +26,16 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Open Sans', sans-serif;
             line-height: 1.6;
             color: var(--st1-text-dark);
             background-color: var(--st1-white);
             scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--st1-black);
         }
 
         .container {
@@ -46,6 +54,7 @@
             position: sticky;
             top: 0;
             z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
         header .container {
@@ -64,22 +73,72 @@
 
         header nav ul {
             list-style: none;
+            display: flex;
         }
 
         header nav ul li {
-            display: inline;
-            margin-left: 20px;
+            margin-left: 30px;
         }
 
         header nav ul li a {
             color: var(--st1-white);
             text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s ease;
+            font-weight: 600;
+            transition: color 0.3s ease, transform 0.2s ease;
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        header nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--st1-yellow);
+            left: 0;
+            bottom: 0;
+            transition: width 0.3s ease;
         }
 
         header nav ul li a:hover {
             color: var(--st1-yellow);
+            transform: translateY(-2px);
+        }
+        header nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile Navigation Toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+            position: relative;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background: var(--st1-yellow);
+            border-radius: 3px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .menu-toggle.open span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .menu-toggle.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.open span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
         }
 
         /* Buttons */
@@ -87,31 +146,46 @@
             display: inline-block;
             background: var(--st1-red);
             color: var(--st1-white);
-            padding: 10px 20px;
+            padding: 12px 25px;
             text-decoration: none;
             border-radius: 5px;
-            transition: background 0.3s ease, transform 0.2s ease;
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
             border: none;
             cursor: pointer;
             font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
 
         .btn:hover {
             background: #c82333; /* A slightly darker red */
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        .btn-secondary {
+            background: var(--st1-yellow);
+            color: var(--st1-black);
+            margin-left: 15px;
+        }
+
+        .btn-secondary:hover {
+            background: #e6c200; /* Slightly darker yellow */
+            color: var(--st1-black);
         }
 
         /* Hero Section */
         .hero-section {
-            /* Placeholder image for a fuel station/energy theme. Replace with actual ST1 branding images. */
-            background: url('https://images.unsplash.com/photo-1594412211181-e2f4f2f4f2f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80') no-repeat center center/cover;
+            background: url('https://www.st1.eu/sites/default/files/styles/hero_image_desktop/public/2022-08/st1_hero_desktop_0.jpg?itok=yX6t6XmH') no-repeat center center/cover;
             color: var(--st1-white);
-            height: 60vh;
+            height: 70vh; /* Increased height */
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             position: relative;
+            overflow: hidden;
         }
 
         .hero-section::before {
@@ -121,40 +195,53 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5); /* Dark overlay for text readability */
+            background: rgba(0, 0, 0, 0.6); /* Darker overlay for better text readability */
         }
 
         .hero-content {
             position: relative;
             z-index: 1;
-            max-width: 800px;
-            padding: 20px;
+            max-width: 900px;
+            padding: 30px;
+            animation: fadeIn 1s ease-out;
         }
 
         .hero-content h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
+            font-size: 4rem; /* Larger font size */
+            margin-bottom: 1.5rem;
             color: var(--st1-yellow);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
         }
 
         .hero-content p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
+            font-size: 1.5rem; /* Larger font size */
+            margin-bottom: 2.5rem;
+            font-weight: 400;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* General Section Styling */
         section {
-            padding: 4rem 0;
+            padding: 5rem 0; /* More padding */
             text-align: center;
         }
 
         section:nth-of-type(even) {
+            background-color: var(--st1-white); /* Use white for even, light grey for odd */
+        }
+        section:nth-of-type(odd) {
             background-color: #f4f4f4; /* Light grey for alternating sections */
         }
 
+
         section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
+            font-size: 3rem; /* Larger heading */
+            margin-bottom: 2.5rem;
             color: var(--st1-black);
             position: relative;
             display: inline-block;
@@ -163,53 +250,61 @@
         section h2::after {
             content: '';
             display: block;
-            width: 60px;
-            height: 4px;
+            width: 80px; /* Wider underline */
+            height: 5px; /* Thicker underline */
             background: var(--st1-red);
-            margin: 10px auto 0;
-            border-radius: 2px;
+            margin: 15px auto 0;
+            border-radius: 3px;
         }
 
         /* About Section */
         .about-section p {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto 3rem auto;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
+            line-height: 1.8;
         }
 
         .about-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
-            margin-top: 2rem;
+            margin-top: 3rem;
         }
 
         .about-item {
             background: var(--st1-white);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
             text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 5px solid var(--st1-yellow);
         }
 
         .about-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
         .about-item img {
             width: 100%;
-            max-height: 200px;
+            max-height: 220px;
             object-fit: cover;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            /* Placeholder images. Replace with actual ST1 related images. */
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         .about-item h3 {
             color: var(--st1-red);
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+        .about-item p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--st1-text-dark);
         }
 
         /* Services Section */
@@ -217,34 +312,43 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 30px;
-            margin-top: 2rem;
+            margin-top: 3rem;
         }
 
         .service-item {
             background: var(--st1-black);
             color: var(--st1-white);
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 35px;
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
             text-align: center;
             border-bottom: 5px solid var(--st1-yellow);
-            transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+            transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
         }
 
         .service-item:hover {
             background: #343a40; /* Slightly lighter black */
             border-color: var(--st1-red);
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .service-item i {
+            font-size: 3rem;
+            color: var(--st1-yellow);
+            margin-bottom: 20px;
         }
 
         .service-item h3 {
             color: var(--st1-yellow);
             margin-bottom: 15px;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
         }
 
         .service-item p {
             font-size: 1rem;
+            line-height: 1.7;
+            color: var(--st1-white);
         }
 
         /* Contact Section */
@@ -262,26 +366,42 @@
         }
 
         .contact-section p {
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
+            font-size: 1.15rem;
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .contact-section form {
-            max-width: 600px;
+            max-width: 650px;
             margin: auto;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
+            padding: 30px;
+            background: rgba(0,0,0,0.1);
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
         }
 
         .contact-section form input,
         .contact-section form textarea {
-            padding: 12px;
+            padding: 15px;
             border: none;
-            border-radius: 5px;
-            font-size: 1rem;
-            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            font-size: 1.05rem;
+            background: rgba(255, 255, 255, 0.95);
             color: var(--st1-black);
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .contact-section form input:focus,
+        .contact-section form textarea:focus {
+            outline: none;
+            border-color: var(--st1-yellow);
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3);
         }
 
         .contact-section form input::placeholder,
@@ -290,7 +410,7 @@
         }
 
         .contact-section form textarea {
-            min-height: 120px;
+            min-height: 150px;
             resize: vertical;
         }
 
@@ -298,14 +418,18 @@
             background: var(--st1-black);
             color: var(--st1-white);
             border: 2px solid var(--st1-yellow);
-            padding: 12px 25px;
-            font-size: 1.1rem;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            align-self: center;
+            width: fit-content;
         }
 
         .contact-section form .btn:hover {
             background: var(--st1-yellow);
             color: var(--st1-black);
             border-color: var(--st1-black);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
         }
 
         /* Footer */
@@ -313,7 +437,7 @@
             background: var(--st1-black);
             color: var(--st1-white);
             text-align: center;
-            padding: 2rem 0;
+            padding: 2.5rem 0;
             border-top: 3px solid var(--st1-red);
         }
 
@@ -326,32 +450,137 @@
 
         footer p {
             margin: 0;
+            font-size: 0.95rem;
         }
 
         .social-links a {
             color: var(--st1-white);
             text-decoration: none;
-            margin-left: 15px;
-            transition: color 0.3s ease;
+            margin-left: 20px;
+            font-size: 1.5rem;
+            transition: color 0.3s ease, transform 0.2s ease;
         }
 
         .social-links a:hover {
             color: var(--st1-yellow);
+            transform: translateY(-3px);
+        }
+
+        /* Back to Top Button */
+        #back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--st1-red);
+            color: var(--st1-white);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: background 0.3s ease, transform 0.2s ease, opacity 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 999;
+        }
+
+        #back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #back-to-top:hover {
+            background: #c82333;
+            transform: translateY(-3px);
         }
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
             header .container {
-                flex-direction: column;
-                text-align: center;
+                flex-direction: row; /* Keep logo and toggle on one line */
+                justify-content: space-between;
+            }
+
+            header nav {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: var(--st1-black);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transform: translateX(100%);
+                transition: transform 0.4s ease-in-out;
+                z-index: 999;
+            }
+
+            header nav.open {
+                transform: translateX(0);
             }
 
             header nav ul {
-                margin-top: 15px;
+                flex-direction: column;
+                text-align: center;
+                gap: 30px;
             }
 
             header nav ul li {
-                margin: 0 10px;
+                margin: 0;
+            }
+
+            header nav ul li a {
+                font-size: 1.8rem;
+                padding: 10px 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+
+            .hero-content p {
+                font-size: 1.2rem;
+            }
+
+            section h2 {
+                font-size: 2.5rem;
+            }
+
+            .about-grid, .service-grid {
+                grid-template-columns: 1fr;
+            }
+
+            footer .container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .social-links {
+                margin-top: 10px;
+            }
+
+            #back-to-top {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header .logo {
+                font-size: 2rem;
             }
 
             .hero-content h1 {
@@ -362,36 +591,12 @@
                 font-size: 1rem;
             }
 
-            .about-grid, .service-grid {
-                grid-template-columns: 1fr;
-            }
-
-            footer .container {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .social-links {
-                margin-top: 10px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            header .logo {
-                font-size: 2rem;
-            }
-
-            header nav ul li {
-                display: block;
-                margin: 10px 0;
-            }
-
-            .hero-content h1 {
-                font-size: 2rem;
-            }
-
             section h2 {
                 font-size: 2rem;
+            }
+
+            .contact-section form {
+                padding: 20px;
             }
         }
     </style>
@@ -400,7 +605,12 @@
     <header>
         <div class="container">
             <div class="logo">ST1</div>
-            <nav>
+            <div class="menu-toggle" id="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav id="main-nav">
                 <ul>
                     <li><a href="#home">Home</a></li>
                     <li><a href="#about">About Us</a></li>
@@ -417,28 +627,29 @@
                 <h1>Energy for Life</h1>
                 <p>Driving sustainable energy solutions for a brighter future.</p>
                 <a href="#services" class="btn">Explore Our Solutions</a>
+                <a href="#about" class="btn btn-secondary">Learn More</a>
             </div>
         </section>
 
         <section id="about" class="about-section">
             <div class="container">
                 <h2>About ST1</h2>
-                <p>ST1 is a leading energy company with a vision to be the leading producer and seller of CO2-aware energy. We focus on developing and implementing sustainable energy solutions, from advanced biofuels to efficient retail networks.</p>
+                <p>ST1 is a leading energy company with a vision to be the leading producer and seller of CO2-aware energy. We focus on developing and implementing sustainable energy solutions, from advanced biofuels to efficient retail networks across Finland, Sweden, Norway, Poland, and the UK.</p>
                 <div class="about-grid">
                     <div class="about-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/St1_station_in_Finland.jpg/1280px-St1_station_in_Finland.jpg" alt="ST1 Fuel Station">
+                        <img src="https://www.st1.eu/sites/default/files/styles/image_card/public/2022-08/st1_image_card_0.jpg?itok=zQ-eB-zQ" alt="ST1 Vision">
                         <h3>Our Vision</h3>
-                        <p>To be the leading producer and seller of CO2-aware energy, driving the energy transition forward.</p>
+                        <p>To be the leading producer and seller of CO2-aware energy, driving the energy transition forward with innovative solutions.</p>
                     </div>
                     <div class="about-item">
-                        <img src="https://images.unsplash.com/photo-1579547621008-012b1b1b1b1b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Biofuel production facility">
+                        <img src="https://www.st1.eu/sites/default/files/styles/image_card/public/2022-08/st1_image_card_1.jpg?itok=yX6t6XmH" alt="Sustainability Focus">
                         <h3>Sustainability Focus</h3>
-                        <p>Committed to reducing carbon emissions through innovative biofuels and renewable energy sources.</p>
+                        <p>Committed to reducing carbon emissions through pioneering advanced biofuels and investing in renewable energy sources.</p>
                     </div>
                     <div class="about-item">
-                        <img src="https://images.unsplash.com/photo-1533743988484-91f9f9f9f9f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Wind turbines at sunset">
+                        <img src="https://www.st1.eu/sites/default/files/styles/image_card/public/2022-08/st1_image_card_2.jpg?itok=aB-aB-aB" alt="Innovation & Growth">
                         <h3>Innovation & Growth</h3>
-                        <p>Investing in research and development to create new, efficient, and environmentally friendly energy solutions.</p>
+                        <p>Investing in research and development to create new, efficient, and environmentally friendly energy solutions for tomorrow.</p>
                     </div>
                 </div>
             </div>
@@ -449,18 +660,22 @@
                 <h2>Our Services</h2>
                 <div class="service-grid">
                     <div class="service-item">
+                        <i class="fas fa-gas-pump"></i>
                         <h3>Retail Fuel Network</h3>
                         <p>Extensive network of ST1 and Shell branded service stations offering quality fuels and convenience services.</p>
                     </div>
                     <div class="service-item">
+                        <i class="fas fa-leaf"></i>
                         <h3>Advanced Biofuels</h3>
                         <p>Pioneering the production and distribution of advanced biofuels, significantly reducing CO2 emissions.</p>
                     </div>
                     <div class="service-item">
+                        <i class="fas fa-wind"></i>
                         <h3>Renewable Energy</h3>
                         <p>Developing and operating wind power and geothermal energy projects for a sustainable energy mix.</p>
                     </div>
                     <div class="service-item">
+                        <i class="fas fa-thermometer-half"></i>
                         <h3>Heating & Cooling</h3>
                         <p>Providing efficient and environmentally friendly heating and cooling solutions for homes and businesses.</p>
                     </div>
@@ -471,12 +686,12 @@
         <section id="contact" class="contact-section">
             <div class="container">
                 <h2>Contact Us</h2>
-                <p>Have questions or want to collaborate? Reach out to us!</p>
+                <p>Have questions or want to collaborate on sustainable energy solutions? Reach out to us!</p>
                 <form action="#" method="POST">
-                    <input type="text" name="name" placeholder="Your Name" required>
-                    <input type="email" name="email" placeholder="Your Email" required>
-                    <input type="text" name="subject" placeholder="Subject">
-                    <textarea name="message" placeholder="Your Message" required></textarea>
+                    <input type="text" name="name" placeholder="Your Name" required aria-label="Your Name">
+                    <input type="email" name="email" placeholder="Your Email" required aria-label="Your Email">
+                    <input type="text" name="subject" placeholder="Subject" aria-label="Subject">
+                    <textarea name="message" placeholder="Your Message" required aria-label="Your Message"></textarea>
                     <button type="submit" class="btn">Send Message</button>
                 </form>
             </div>
@@ -487,11 +702,56 @@
         <div class="container">
             <p>&copy; 2023 ST1. All rights reserved.</p>
             <div class="social-links">
-                <a href="#">Facebook</a>
-                <a href="#">Twitter</a>
-                <a href="#">LinkedIn</a>
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
     </footer>
+
+    <button id="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mainNav = document.getElementById('main-nav');
+        const navLinks = mainNav.querySelectorAll('a');
+
+        mobileMenu.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+            mainNav.classList.toggle('open');
+            document.body.classList.toggle('no-scroll'); // Optional: prevent scrolling when menu is open
+        });
+
+        // Close mobile menu when a link is clicked
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+                mainNav.classList.remove('open');
+                document.body.classList.remove('no-scroll');
+            });
+        });
+
+        // Back to top button functionality
+        const backToTopButton = document.getElementById('back-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) { // Show button after scrolling 300px
+                backToTopButton.classList.add('show');
+            } else {
+                backToTopButton.classList.remove('show');
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
 </body>
 </html>
